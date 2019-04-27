@@ -31,6 +31,23 @@ file around the currently selected tree entry. When a specific
 [Bolton](#boltons) is selected, the tree view will display a preview of the
 file it where applied.
 
+```
+Hardpoints / Boltons                                   #!/bin/sh
+├──README.md:60
+│  └──foo                                              # HARDPOINT: shell_function, global_env
+├──README.md:67                                        export FOO=bar
+│  └──foo
+├──examples/lib.py:2
+│  └──python_func
+├──examples/lib.py:77
+│  └──python_class
+└──examples/script.sh:3
+   ├──shell_function
+   └──global_env
+      ├──foo
+      └──test
+```
+
 To apply the selected [Bolton](#boltons) press Enter, or CTRL+C to cancel.
 
 ### Boltons
