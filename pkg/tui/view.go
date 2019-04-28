@@ -141,7 +141,7 @@ func changeSelector(dv *tview.TextView, hps []*hardpoints.Point, bl boltons.Libr
 			if err != nil {
 				panic(err)
 			}
-			text = apply(text, bolton, hardpoint)
+			text = diffPreview(text, bolton, hardpoint)
 		}
 
 		dv.SetText(text)
@@ -150,6 +150,25 @@ func changeSelector(dv *tview.TextView, hps []*hardpoints.Point, bl boltons.Libr
 			dv.ScrollTo(hardpoint.Line-1, 0)
 		}
 	}
+}
+
+func diffSection(b boltons.Bolton) (out []string) {
+	newstring, err := b.Contents()
+	if err != nil {
+		panic(err)
+	}
+	for _, line := range strings.Split(newstring, "\n") {
+		out = append(out, "[green]+"+line+"[-]")
+	}
+	return out
+}
+
+func diffPreview(input string, b boltons.Bolton, h *hardpoints.Point) string {
+	lines := strings.Split(input, "\n")
+
+	output := append(append(lines[:h.Line], diffSection(b)...), lines[h.Line:]...)
+
+	return strings.Join(output, "\n")
 }
 
 func apply(input string, b boltons.Bolton, h *hardpoints.Point) string {
@@ -169,6 +188,7 @@ func apply(input string, b boltons.Bolton, h *hardpoints.Point) string {
 func diffView(st *tview.TreeView, hps []*hardpoints.Point, bl boltons.Library, app *tview.Application) *tview.TextView {
 	dv := tview.NewTextView()
 	dv.SetScrollable(true)
+	dv.SetDynamicColors(true)
 	st.SetChangedFunc(changeSelector(dv, hps, bl))
 	st.SetSelectedFunc(applySelector(app, hps, bl))
 	return dv
