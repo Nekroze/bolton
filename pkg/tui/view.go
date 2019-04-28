@@ -127,9 +127,6 @@ func changeSelector(dv *tview.TextView, hps []*hardpoints.Point, bl boltons.Libr
 		lineno := parts[1]
 
 		hardpoint := hpl[fmt.Sprintf("%s:%s", filename, lineno)]
-		if hardpoint == nil { // may not be needed
-			return
-		}
 
 		b, err := ioutil.ReadFile(hardpoint.Path)
 		if err != nil {
