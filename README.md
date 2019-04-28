@@ -97,3 +97,14 @@ Tags are a simple filtering mechanism, a [Hardpoint](#hardpoints) is declared
 with a CSV of tag values that are used to filter down the [Boltons](#boltons)
 that can be applied there by looking only in the directory for that Tag under
 `~/.boltons`.
+
+## To Do
+
+- Display diff in preview
+- Syntax highlight preview
+- Improve error handling
+- Refactor tui package, its an imperative mess
+- Make hardpoint discovery run in parallel
+- Tweakable settings, everything is currently hard coded
+- Write tests
+- CI
