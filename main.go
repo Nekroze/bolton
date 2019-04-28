@@ -18,7 +18,7 @@ func main() {
 
 	bl, err := boltons.LoadLibrary(libraryPath)
 	if err != nil {
-		fmt.Println("failed to load library: %s", err)
+		fmt.Println("failed to load library:", err)
 	}
 
 	tui.Run(hps, bl)

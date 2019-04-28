@@ -9,6 +9,8 @@ BINARY   := $(GOPATH)/bin/$(NAME)
 GORICH   := $(GOPATH)/bin/richgo
 GOCILINT := $(GOPATH)/bin/golangci-lint
 
+GO111MODULE = on
+
 ## Phony Targets
 
 .PHONY: binary dev deps depunpin depupdate test lint sanity
@@ -29,7 +31,7 @@ depupdate: depunpin deps
 run: $(BINARY)
 	$<
 
-test: $(GORICH)
+test: $(GORICH) binary
 	$< test -v .
 
 lint: $(GOCILINT)
@@ -50,4 +52,4 @@ go.sum: go.mod
 	touch $@ $<
 
 $(BINARY): deps $(GO_FILES)
-	go install .
+	go build -o $@ .
