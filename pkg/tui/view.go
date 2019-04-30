@@ -166,23 +166,24 @@ func diffSection(b boltons.Bolton) (out []string) {
 func diffPreview(input string, b boltons.Bolton, h *hardpoints.Point) string {
 	lines := strings.Split(input, "\n")
 
-	output := append(append(lines[:h.Line], diffSection(b)...), lines[h.Line:]...)
+	head := strings.Join(lines[:h.Line], "\n")
+	middle := strings.Join(diffSection(b), "\n")
+	tail := strings.Join(lines[h.Line:], "\n")
 
-	return strings.Join(output, "\n")
+	return fmt.Sprintf("%s\n%s\n%s", head, middle, tail)
 }
 
 func apply(input string, b boltons.Bolton, h *hardpoints.Point) string {
 	lines := strings.Split(input, "\n")
 
-	newstring, err := b.Contents()
+	head := strings.Join(lines[:h.Line], "\n")
+	middle, err := b.Contents()
 	if err != nil {
 		panic(err)
 	}
-	newsection := strings.Split(newstring, "\n")
+	tail := strings.Join(lines[h.Line:], "\n")
 
-	output := append(append(lines[:h.Line], newsection...), lines[h.Line:]...)
-
-	return strings.Join(output, "\n")
+	return fmt.Sprintf("%s\n%s\n%s", head, middle, tail)
 }
 
 func diffView(st *tview.TreeView, hps []*hardpoints.Point, bl boltons.Library, app *tview.Application) *tview.TextView {

@@ -31,11 +31,11 @@ depupdate: depunpin deps
 run: $(BINARY)
 	$<
 
-test: $(GORICH) binary
-	$< test -v .
+test:
+	go test -v ./...
 
 lint: $(GOCILINT)
-	$< run --enable-all --disable gochecknoglobals
+	$< run --enable-all --disable gochecknoglobals,scopelint,dupl
 
 sanity: binary lint test
 
